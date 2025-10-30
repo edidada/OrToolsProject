@@ -1,6 +1,5 @@
 from pulp import *
 
-
 def production_planning_example():
     """
     生产计划问题：
