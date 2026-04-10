@@ -170,7 +170,8 @@ def calculate_test_score(test_results) -> float:
     return min(100, score)
 
 
-if __name__ == "__main__":
+def main():
+    """主函数入口"""
     # 运行测试并获取结果
     exit_code = pytest.main([
         __file__,
@@ -180,7 +181,11 @@ if __name__ == "__main__":
     ])
 
     # 这里可以添加测试结果解析和得分计算
-    print(f"\n测试退出码: {exit_code}")
+    print(f"\n测试退出码：{exit_code}")
 
-    # 退出码为0表示所有测试通过
+    # 退出码为 0 表示所有测试通过
     sys.exit(0 if exit_code == 0 else 1)
+
+
+if __name__ == "__main__":
+    main()
