@@ -5,7 +5,7 @@ from ortools.sat.python import cp_model
 
 EMPLOYEES = ("Alice", "Bob")
 SHIFTS = ("早班", "晚班")
-DAYS = range(2)
+DAYS = range(20)
 
 
 def solve_schedule() -> dict[int, dict[str, str]]:
