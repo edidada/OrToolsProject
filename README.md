@@ -66,55 +66,17 @@ else:
 
 如果你正在处理的问题涉及到复杂的排班、路径规划，或者纯线性模型搞不定，OR-Tools 会是更合适的选择。
 
-### 可运行代码演示：CP-SAT 排班
+### 运行项目示例（Poetry）
 
-下面的示例为两名员工安排两天的早、晚班。它保证每个班次恰好一人、每人每天至多一个班次，并让总班次数尽量均衡。将它保存为 `schedule_demo.py` 后运行 `python schedule_demo.py`：
+CP-SAT 排班演示实现于 `src/ortools_project/examples/cp_sat_schedule.py`。它为两名员工安排两天的早、晚班，保证每个班次恰好一人、每人每天至多一个班次，并最小化两人的总班次数差距。
 
-```python
-from ortools.sat.python import cp_model
-
-employees = ["Alice", "Bob"]
-days = range(2)
-shifts = ["早班", "晚班"]
-
-model = cp_model.CpModel()
-works = {
-    (employee, day, shift): model.new_bool_var(f"{employee}_{day}_{shift}")
-    for employee in employees
-    for day in days
-    for shift in shifts
-}
-
-# 每个班次恰好安排一人；每人每天最多一个班次。
-for day in days:
-    for shift in shifts:
-        model.add_exactly_one(works[employee, day, shift] for employee in employees)
-    for employee in employees:
-        model.add_at_most_one(works[employee, day, shift] for shift in shifts)
-
-# 最小化两人的班次数差距。
-totals = [sum(works[employee, day, shift] for day in days for shift in shifts)
-          for employee in employees]
-difference = model.new_int_var(0, len(days) * len(shifts), "difference")
-model.add_abs_equality(difference, totals[0] - totals[1])
-model.minimize(difference)
-
-solver = cp_model.CpSolver()
-if solver.solve(model) not in (cp_model.OPTIMAL, cp_model.FEASIBLE):
-    raise RuntimeError("未找到可行排班")
-
-for day in days:
-    assignments = [f"{shift}: {employee}" for shift in shifts for employee in employees
-                   if solver.value(works[employee, day, shift])]
-    print(f"第 {day + 1} 天，" + "，".join(assignments))
-```
-
-安装依赖后即可运行仓库的 PuLP 示例与测试：
+使用 Poetry 安装锁定依赖后，通过项目定义的命令运行示例与测试：
 
 ```bash
-python -m pip install "pulp>=2.8,<3.0" "pytest>=7.4,<8" ortools
-python pulp_example.py
-python -m pytest test_pulp.py -v
+poetry install
+poetry run cp-sat-schedule
+poetry run pulp-example
+poetry run pytest test_pulp.py -v
 ```
 
 OR-Tools 在工业界落地的三类高价值场景：用 CP-SAT 解决多技能工排班（意大利 Magni 伸缩臂叉装车产线）、用 Routing 解决多中心铁路商品车配送（中国铁路特货运北京分公司，2021 年试运行）、用 GLOP/PDLP 解决大规模生产计划（智利 CMPC 锯木厂，需求满足率提升 7%）。
