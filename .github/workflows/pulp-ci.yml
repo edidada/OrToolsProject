@@ -2,9 +2,9 @@ name: PuLP Optimization CI
 
 on:
   push:
-    branches: [ main, master ]
+    branches: [ main]
   pull_request:
-    branches: [ main, master ]
+    branches: [ main]
   schedule:
     - cron: '0 2 * * 1'  # 每周一凌晨2点运行
 
