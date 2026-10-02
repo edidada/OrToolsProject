@@ -40,5 +40,10 @@ def production_planning_example():
         print(f"{name}: 使用 {constraint.value()} / 限制 {constraint.constant}")
 
 
-if __name__ == "__main__":
+def main():
+    """主函数入口"""
     production_planning_example()
+
+
+if __name__ == "__main__":
+    main()

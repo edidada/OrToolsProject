@@ -244,14 +244,15 @@ def performance_score_calculation(results: Dict) -> float:
     return max(0, score)
 
 
-if __name__ == "__main__":
+def main():
+    """主函数入口"""
     # 运行性能基准测试
     benchmark = PulpBenchmark()
     results = benchmark.run_all_benchmarks()
 
     # 计算性能得分
     performance_score = performance_score_calculation(results)
-    print(f"\n🎯 性能得分: {performance_score:.1f}/100")
+    print(f"\n🎯 性能得分：{performance_score:.1f}/100")
 
     # 根据得分给出评价
     if performance_score >= 90:
@@ -263,3 +264,7 @@ if __name__ == "__main__":
 
     # 退出码基于性能得分
     exit(0 if performance_score >= 60 else 1)
+
+
+if __name__ == "__main__":
+    main()

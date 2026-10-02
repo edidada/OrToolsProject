@@ -1,0 +1,28 @@
+[tool.poetry]
+name = "ortools-project"
+version = "0.1.0"
+description = "Optimization project using PuLP and OR-Tools"
+authors = ["Your Name <your.email@example.com>"]
+readme = "README.md"
+packages = [
+    { include = "*.py" }
+]
+
+[tool.poetry.dependencies]
+python = "^3.8.1"
+pulp = "^2.8"
+psutil = "^5.9"
+pytest = "^7.4"
+
+[tool.poetry.group.dev.dependencies]
+black = "^23.0"
+flake8 = "^6.0"
+
+[tool.poetry.scripts]
+pulp-example = "pulp_example:main"
+test-pulp = "test_pulp:main"
+benchmark-pulp = "benchmark_pulp:main"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
