@@ -1,0 +1,35 @@
+{
+  "basic_production": {
+    "time_avg": 0.02746379852294922,
+    "time_std": 0.01266732227808873,
+    "time_min": 0.02195453643798828,
+    "time_max": 0.10720014572143555,
+    "memory_avg": 0.008046875,
+    "memory_max": 0.37109375,
+    "objective_avg": 1640.0,
+    "iterations": 50
+  },
+  "large_scale": {
+    "solve_time": 0.06056833267211914,
+    "memory_used": 0.40234375,
+    "num_variables": 50,
+    "num_constraints": 20,
+    "objective_value": 40000.0,
+    "status": "Optimal"
+  },
+  "solver_comparison": {
+    "CBC": {
+      "solve_time": 0.049562692642211914,
+      "objective_value": 180.0,
+      "status": "Optimal",
+      "available": true
+    },
+    "GLPK": {
+      "solve_time": null,
+      "objective_value": null,
+      "status": "Unavailable",
+      "available": false,
+      "error": "PuLP: cannot execute glpsol.exe"
+    }
+  }
+}
