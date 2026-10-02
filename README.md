@@ -79,6 +79,14 @@ poetry run pulp-example
 poetry run pytest test_pulp.py -v
 ```
 
+英语机房口语考试座位表由 `src/ortools_project/examples/oral_exam_seating.py` 生成。编辑 `config/oral_exam_seating.json` 中的 `n`（班级数）、`m`（每班人数）和 `x`（机房座位数）后运行：
+
+```bash
+poetry run oral-exam-seating --config config/oral_exam_seating.json
+```
+
+每个班级会被拆分为不超过 `x` 人的连续场次；一个班的所有场次完成后，才会开始下一个班级。
+
 OR-Tools 在工业界落地的三类高价值场景：用 CP-SAT 解决多技能工排班（意大利 Magni 伸缩臂叉装车产线）、用 Routing 解决多中心铁路商品车配送（中国铁路特货运北京分公司，2021 年试运行）、用 GLOP/PDLP 解决大规模生产计划（智利 CMPC 锯木厂，需求满足率提升 7%）。
 
 ---

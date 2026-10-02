@@ -15,6 +15,7 @@ dependencies = [
 [project.scripts]
 pulp-example = "ortools_project.pulp_example:main"
 cp-sat-schedule = "ortools_project.examples.cp_sat_schedule:main"
+oral-exam-seating = "ortools_project.examples.oral_exam_seating:main"
 
 [tool.poetry]
 packages = [
