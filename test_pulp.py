@@ -63,16 +63,16 @@ class TestPulpProduction:
         """测试特定解的质量"""
         self.prob.solve()
 
-        # 已知最优解应该接近理论值
+        # 该模型的整数最优解为 Product_A=36、Product_B=28。
         objective_value = value(self.prob.objective)
-        assert objective_value >= 2000, "目标函数值应该合理"
+        assert objective_value == pytest.approx(1640), "目标函数应等于理论最优值"
 
-    @pytest.mark.parametrize("profit_a,profit_b,expected_min", [
-        (30, 20, 2000),  # 原始参数
-        (40, 20, 2500),  # 提高产品A利润
-        (30, 30, 2400),  # 提高产品B利润
+    @pytest.mark.parametrize("profit_a,profit_b,expected_objective", [
+        (30, 20, 1640),  # 原始参数：x1=36, x2=28
+        (40, 20, 2000),  # 产品 A 更有价值：x1=50, x2=0
+        (30, 30, 1920),  # 最大化总产量：x1=36, x2=28
     ])
-    def test_parameter_sensitivity(self, profit_a, profit_b, expected_min):
+    def test_parameter_sensitivity(self, profit_a, profit_b, expected_objective):
         """测试参数敏感性"""
         prob = LpProblem("Sensitivity_Test", LpMaximize)
         x1 = LpVariable("Product_A", 0, None, LpInteger)
@@ -84,7 +84,8 @@ class TestPulpProduction:
         prob += x1 + x2 <= 80
 
         prob.solve()
-        assert value(prob.objective) >= expected_min
+        assert prob.status == 1
+        assert value(prob.objective) == pytest.approx(expected_objective)
 
 
 class TestPulpEdgeCases:

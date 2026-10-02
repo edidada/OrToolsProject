@@ -37,7 +37,11 @@ def production_planning_example():
     # 打印约束条件的使用情况
     print("\n资源使用情况:")
     for name, constraint in prob.constraints.items():
-        print(f"{name}: 使用 {constraint.value()} / 限制 {constraint.constant}")
+        # PuLP 的 constraint.value() 是“左侧 - 右侧”的残差，
+        # constraint.constant 则以相反数保存右侧常量。
+        limit = -constraint.constant
+        used = constraint.value() + limit
+        print(f"{name}: 使用 {used} / 限制 {limit}")
 
 
 def main():

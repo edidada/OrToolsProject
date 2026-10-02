@@ -12,6 +12,10 @@ jobs:
   test-pulp:
     name: Test PuLP Optimization
     runs-on: ${{ matrix.os }}
+    env:
+      # Windows hosted runners default to a legacy console encoding (CP1252).
+      # The examples print Chinese text, so make their output portable.
+      PYTHONUTF8: "1"
 
     strategy:
       matrix:
@@ -30,8 +34,8 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install pulp
-        pip install pytest
+        pip install "pulp>=2.8,<3.0"
+        pip install "pytest>=7.4,<8"
 
     - name: Run PuLP example
       run: |
