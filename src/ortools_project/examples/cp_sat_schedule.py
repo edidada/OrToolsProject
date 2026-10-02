@@ -9,7 +9,7 @@ DAYS = range(20)
 
 
 def solve_schedule() -> dict[int, dict[str, str]]:
-    """Build and solve a balanced two-day, two-shift employee schedule."""
+    """Build and solve a balanced schedule with daily shift rotation."""
     model = cp_model.CpModel()
     works = {
         (employee, day, shift): model.new_bool_var(f"{employee}_{day}_{shift}")
@@ -23,6 +23,14 @@ def solve_schedule() -> dict[int, dict[str, str]]:
             model.add_exactly_one(works[employee, day, shift] for employee in EMPLOYEES)
         for employee in EMPLOYEES:
             model.add_at_most_one(works[employee, day, shift] for shift in SHIFTS)
+
+    # 防止员工连续两天被分到相同班次。原模型中两位员工完全对称，
+    # 因此求解器可以合法地让同一人永远上早班、另一人永远上晚班。
+    # 该约束使两人每天轮换早、晚班。
+    for day in range(len(DAYS) - 1):
+        for employee in EMPLOYEES:
+            for shift in SHIFTS:
+                model.add(works[employee, day, shift] + works[employee, day + 1, shift] <= 1)
 
     totals = [
         sum(works[employee, day, shift] for day in DAYS for shift in SHIFTS)

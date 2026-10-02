@@ -68,7 +68,7 @@ else:
 
 ### 运行项目示例（Poetry）
 
-CP-SAT 排班演示实现于 `src/ortools_project/examples/cp_sat_schedule.py`。它为两名员工安排两天的早、晚班，保证每个班次恰好一人、每人每天至多一个班次，并最小化两人的总班次数差距。
+CP-SAT 排班演示实现于 `src/ortools_project/examples/cp_sat_schedule.py`。它为两名员工安排 20 天的早、晚班，保证每个班次恰好一人、每人每天至多一个班次，并要求员工每天轮换早、晚班。
 
 使用 Poetry 安装锁定依赖后，通过项目定义的命令运行示例与测试：
 
